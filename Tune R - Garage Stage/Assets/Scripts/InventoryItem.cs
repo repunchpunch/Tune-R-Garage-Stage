@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using System.Xml.Serialization;
 
-public class InventoryItem : MonoBehaviour
+
+public class InventoryItem : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    Image itemIcon;
+    public CanvasGroup canvasGroup {get; private set;}
+
+    public Item myItem {get; set;}
+    public InventorySlot activeSlot {get; set;}
+
+    void Awake()
     {
-        
+        canvasGroup = GetComponent<CanvasGroup>();
+        itemIcon = GetComponent<Image>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize(Item item, InventorySlot parent)
     {
-        
+        activeSlot = parent;
+        activeSlot.myItem = this;
+        myItem = item;
+        itemIcon.sprite = item.sprite;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            Inventory.Singleton.SetCarriedItem(this);
+        }
     }
 }
