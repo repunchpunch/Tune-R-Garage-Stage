@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968bd8c3c8126f048b74ff70bc5a4e1e, type: 3}
+  m_Name: TiresTest
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: e06d6d378abc4f74bb4e99120a9878e5, type: 3}
+  slotTag: 5
+  durabilityLeft: 100
+  maxPower: 200
+  quality: 1
+  equipmentPrefab: {fileID: 0}
