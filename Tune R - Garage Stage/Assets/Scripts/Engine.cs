@@ -29,6 +29,6 @@ public class Engine : Item
 
     public float getCurrentEnginePower()
     {
-        return basePower*(100f+currentUpradeInPercents);
+        return basePower*(1f+currentUpradeInPercents/100f);
     }
 }

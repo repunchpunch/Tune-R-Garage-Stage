@@ -9,6 +9,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public SlotTag myTag;
 
+    public delegate void ItemAddedDelegate(InventoryItem item);
+    public static event ItemAddedDelegate OnItemAdded;
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button == PointerEventData.InputButton.Left)
@@ -30,6 +33,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         myItem.transform.SetParent(transform);
         myItem.transform.localPosition = Vector3.zero;
         myItem.canvasGroup.blocksRaycasts = true;
+
+        if(myTag != SlotTag.none)
+        {
+            OnItemAdded?.Invoke(item);
+            //Debug.Log("Signal");
+        }
 
         // if(myTag != SlotTag.none)
         // {

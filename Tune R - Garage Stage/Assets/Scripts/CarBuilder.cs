@@ -1,10 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CarBuilder : MonoBehaviour
 {
+    private Dictionary<System.Type, System.Action<InventoryItem>> itemActions;
+
+    void Awake()
+    {
+        itemActions = new Dictionary<System.Type, System.Action<InventoryItem>>
+        {
+            { typeof(Engine),       item => { engine       = (Engine)item.myItem;       } },
+            { typeof(Turbo),        item => { turbo        = (Turbo)item.myItem;        } },
+            { typeof(Transmission), item => { transmission = (Transmission)item.myItem; } },
+            { typeof(Suspension),   item => { suspension   = (Suspension)item.myItem;   } },
+            { typeof(Tires),        item => { tires        = (Tires)item.myItem;        } },
+            { typeof(Brakes),       item => { brakes       = (Brakes)item.myItem;       } }
+        };
+    }
+
     private Engine engine;
     private Turbo turbo;
     private Transmission transmission;
@@ -29,6 +45,27 @@ public class CarBuilder : MonoBehaviour
         this.brakes = brakes;
     }
 
+    void OnEnable()
+    {
+        InventorySlot.OnItemAdded += UpdateCarPart;
+    }
+
+    void OnDisable()
+    {
+        InventorySlot.OnItemAdded -= UpdateCarPart;
+    }
+
+    void UpdateCarPart(InventoryItem item)
+    {
+        System.Type itemType = item.myItem.GetType();
+        if (itemActions.ContainsKey(itemType))
+        {
+            itemActions[itemType](item);
+        }
+
+        BuildCar();
+    }
+
     private float CalculatePower()
     {
         return
@@ -40,9 +77,9 @@ public class CarBuilder : MonoBehaviour
     private double CalculateChassis()
     {
         return
-                suspension.efficiencyInPercents
-              * tires.efficiencyInPercents
-              * brakes.efficiencyInPercents;
+                suspension.efficiencyInPercents/100f
+              * tires.efficiencyInPercents/100f
+              * brakes.efficiencyInPercents/100f;
     }
 
     private double CalculateReliability()
@@ -59,6 +96,22 @@ public class CarBuilder : MonoBehaviour
 
     public Car BuildCar()
     {
-        return new Car(CalculatePower(), CalculateChassis(), CalculateReliability());
+        Car car = ScriptableObject.CreateInstance<Car>();
+        if (!AreAllPartsPresent()) car.Initialize(0, 0, 0);
+        else car.Initialize(CalculatePower(), CalculateChassis(), CalculateReliability());
+        return car;
+
+    }
+
+    private bool AreAllPartsPresent()
+    {
+        List<Item> parts = new List<Item> { engine, turbo, transmission, suspension, tires, brakes };
+
+        foreach (var part in parts)
+        {
+            if (part == null) return false;
+        }
+
+        return true;
     }
 }

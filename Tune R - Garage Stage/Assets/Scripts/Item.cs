@@ -18,7 +18,7 @@ public class Item : ScriptableObject
 
     public float BreakEventEquation(float currentPower)
     {
-        return 0.9f*(currentPower/maxPower)+0.1f + (durabilityLeft/100f);
+        return 0.9f*(currentPower/maxPower)+0.1f + ((100f-durabilityLeft)/100f);
     }
 
     public bool WillBreak(float currentPower)
