@@ -2022,6 +2022,10 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: c6b3d9b483ad1b843a7430bb8782f080, type: 2}
   - {fileID: 11400000, guid: 6e765896e31eabe44bd1dc514ca1ef7a, type: 2}
+  - {fileID: 11400000, guid: 6b544ca2248a9dd48aeb62ab3a30954f, type: 2}
+  - {fileID: 11400000, guid: 745c79249f818ae438bf142f949e3c91, type: 2}
+  - {fileID: 11400000, guid: 5016be61f750ab243ad1c1027bad6946, type: 2}
+  - {fileID: 11400000, guid: c582ae36c3989e842ac02943e10a3d63, type: 2}
   giveItemBtn: {fileID: 497544249}
 --- !u!114 &1617807330
 MonoBehaviour:

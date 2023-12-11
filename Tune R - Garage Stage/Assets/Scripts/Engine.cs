@@ -7,20 +7,27 @@ using UnityEngine;
 public class Engine : Item
 {
     public float basePower;
-    private float currentUpradeInPercents;
-    private float boughtUpgradeInPercents;
+    private float currentUpradeInPercents = 0f;
+    private int upgradesCount = 0;
+    const int UPGRADES_MAX = 4;
     
     public void setUpgradeInPercents(float upgrade)
     {
-       currentUpradeInPercents = Mathf.Clamp(upgrade, 0, boughtUpgradeInPercents);
+        float upgradesCap = basePower*upgradesCount;
+        currentUpradeInPercents = Mathf.Clamp(upgrade, 0, upgradesCap);
     }
 
-    public void buyUpgradeAddPercents(float upgrade)
+    public bool buyUpgrade()
     {
-        boughtUpgradeInPercents += upgrade;
+        if (upgradesCount < UPGRADES_MAX)
+        {
+            upgradesCount += 1;
+            return true;
+        }
+        else return false;
     }
 
-    public float getCurrentPower()
+    public float getCurrentEnginePower()
     {
         return basePower*(100f+currentUpradeInPercents);
     }
