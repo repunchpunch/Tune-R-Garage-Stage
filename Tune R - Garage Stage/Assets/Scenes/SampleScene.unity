@@ -748,7 +748,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot (3)
+      value: Suspension
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
@@ -956,7 +956,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot
+      value: Engine
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
@@ -1062,7 +1062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot (5)
+      value: Brakes
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
@@ -1782,7 +1782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot (4)
+      value: Tires
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
@@ -2020,12 +2020,8 @@ MonoBehaviour:
   draggablesTransform: {fileID: 1706205325}
   itemPrefab: {fileID: 8000808018089486419, guid: 07299fb737612a840b8a97366f522ab1, type: 3}
   items:
-  - {fileID: 11400000, guid: ba1113e15ca11314ca58164ae50b9787, type: 2}
-  - {fileID: 11400000, guid: b1905ba669ad4b840af2f2b42b6af98f, type: 2}
-  - {fileID: 11400000, guid: 78bc19f4f39758e4bbd0b2deddc374e1, type: 2}
-  - {fileID: 11400000, guid: 82dd6614163ce6149b8026228157e995, type: 2}
-  - {fileID: 11400000, guid: 2533f0c7943a5e5468cf75a549c81709, type: 2}
-  - {fileID: 11400000, guid: 57c58e2b689f944408ee0a1b92d885aa, type: 2}
+  - {fileID: 11400000, guid: c6b3d9b483ad1b843a7430bb8782f080, type: 2}
+  - {fileID: 11400000, guid: 6e765896e31eabe44bd1dc514ca1ef7a, type: 2}
   giveItemBtn: {fileID: 497544249}
 --- !u!114 &1617807330
 MonoBehaviour:
@@ -2155,11 +2151,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot (2)
+      value: Transmission
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2318,11 +2314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6469843036307303805, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: m_Name
-      value: Inventory_Slot (1)
+      value: Turbo
       objectReference: {fileID: 0}
     - target: {fileID: 7657846802062434856, guid: 77b6a32b357197b4590f79893e7f186a, type: 3}
       propertyPath: myTag
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2460,7 +2456,7 @@ GameObject:
   - component: {fileID: 1846896803}
   - component: {fileID: 1846896802}
   m_Layer: 5
-  m_Name: Equipment Slots
+  m_Name: Car Slots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
