@@ -28,6 +28,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         myItem = item;
         myItem.activeSlot = this;
         myItem.transform.SetParent(transform);
+        myItem.transform.localPosition = Vector3.zero;
+        Debug.Log(myItem.transform.ToString());
         myItem.canvasGroup.blocksRaycasts = true;
 
         if(myTag != SlotTag.none)
