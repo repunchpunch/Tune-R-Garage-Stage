@@ -27,6 +27,7 @@ public class CarBuilder : MonoBehaviour
     private Suspension suspension;
     private Tires tires;
     private Brakes brakes;
+    private CarBody carBody;
 
     public CarBuilder ( 
                         Engine engine,
@@ -62,6 +63,13 @@ public class CarBuilder : MonoBehaviour
         {
             itemActions[itemType](item);
         }
+
+        if (engine == null) engine = carBody.stockEngine;
+        if (turbo == null) turbo = carBody.stockTurbo;
+        if (transmission == null) transmission = carBody.stockTransmission;
+        if (suspension == null) suspension = carBody.stockSuspension;
+        if (tires == null) tires = carBody.stockTires;
+        if (brakes == null) brakes = carBody.stockBraks;
 
         BuildCar();
     }
