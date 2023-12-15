@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d3aabcf52e77ce4c96e0b21c427b8ef, type: 3}
-  m_Name: RealTestTires
+  m_Name: 2106 Tires
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: e06d6d378abc4f74bb4e99120a9878e5, type: 3}
+  sprite: {fileID: 21300000, guid: 27d5bddc1b1580c48a816436a8f63f65, type: 3}
   itemTag: 5
-  maxPower: 210
-  quality: 2
-  efficiencyInPercents: 70
+  maxPower: 160
+  quality: 1
+  efficiencyInPercents: 40

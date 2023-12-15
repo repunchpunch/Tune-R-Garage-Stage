@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d3aabcf52e77ce4c96e0b21c427b8ef, type: 3}
-  m_Name: RealTestTires
+  m_Script: {fileID: 11500000, guid: 9d82ef84d82d14a46a7d15541a1f7b9a, type: 3}
+  m_Name: 2106 Brakes
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: e06d6d378abc4f74bb4e99120a9878e5, type: 3}
-  itemTag: 5
-  maxPower: 210
-  quality: 2
-  efficiencyInPercents: 70
+  sprite: {fileID: 21300000, guid: 60f9dc64378c4a341b23e3ccbb5c0fe7, type: 3}
+  itemTag: 6
+  maxPower: 140
+  quality: 1
+  efficiencyInPercents: 30

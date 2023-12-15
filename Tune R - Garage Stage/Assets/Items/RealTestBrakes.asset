@@ -15,5 +15,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 345448da070c03545bba72b126c25222, type: 3}
   itemTag: 6
   maxPower: 300
-  quality: 1
-  efficiencyInPercents: 30
+  quality: 2
+  efficiencyInPercents: 70

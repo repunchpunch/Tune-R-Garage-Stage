@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,11 +7,17 @@ using UnityEngine;
 
 public class CarBuilder : MonoBehaviour
 {
-    private Dictionary<System.Type, System.Action<InventoryItem>> itemActions;
+    
+    private Dictionary<System.Type, System.Action<InventoryItem>> addActions;
+    private Dictionary<SlotTag, System.Action> removeActions;
+
+    public static CarBuilder Instance;
 
     void Awake()
     {
-        itemActions = new Dictionary<System.Type, System.Action<InventoryItem>>
+        Instance = this;
+
+        addActions = new Dictionary<System.Type, System.Action<InventoryItem>>
         {
             { typeof(Engine),       item => { engine       = (Engine)item.myItem;       } },
             { typeof(Turbo),        item => { turbo        = (Turbo)item.myItem;        } },
@@ -18,6 +25,16 @@ public class CarBuilder : MonoBehaviour
             { typeof(Suspension),   item => { suspension   = (Suspension)item.myItem;   } },
             { typeof(Tires),        item => { tires        = (Tires)item.myItem;        } },
             { typeof(Brakes),       item => { brakes       = (Brakes)item.myItem;       } }
+        };
+
+        removeActions = new Dictionary<SlotTag, System.Action>
+        {
+            { SlotTag.engine,       () => { engine       = null; } },
+            { SlotTag.turbo,        () => { turbo        = null; } },
+            { SlotTag.transmission, () => { transmission = null; } },
+            { SlotTag.suspension,   () => { suspension   = null; } },
+            { SlotTag.tires,        () => { tires        = null; } },
+            { SlotTag.brakes,       () => { brakes       = null; } }
         };
     }
 
@@ -27,7 +44,7 @@ public class CarBuilder : MonoBehaviour
     private Suspension suspension;
     private Tires tires;
     private Brakes brakes;
-    private CarBody carBody;
+    public CarBody carBody;
 
     public CarBuilder ( 
                         Engine engine,
@@ -35,7 +52,8 @@ public class CarBuilder : MonoBehaviour
                         Transmission transmission,
                         Suspension suspension,
                         Tires tires,
-                        Brakes brakes
+                        Brakes brakes,
+                        CarBody carBody
                       )
     {
         this.engine = engine;
@@ -44,32 +62,36 @@ public class CarBuilder : MonoBehaviour
         this.suspension = suspension;
         this.tires = tires;
         this.brakes = brakes;
+        this.carBody = carBody;
     }
 
     void OnEnable()
     {
-        InventorySlot.OnItemAdded += UpdateCarPart;
+        InventorySlot.OnItemAdded += AddPartAndBuild;
     }
 
     void OnDisable()
     {
-        InventorySlot.OnItemAdded -= UpdateCarPart;
+        InventorySlot.OnItemAdded -= AddPartAndBuild;
     }
 
-    void UpdateCarPart(InventoryItem item)
+    void AddPartAndBuild(InventoryItem item)
     {
         System.Type itemType = item.myItem.GetType();
-        if (itemActions.ContainsKey(itemType))
+        if (addActions.ContainsKey(itemType))
         {
-            itemActions[itemType](item);
+            addActions[itemType](item);
         }
 
-        if (engine == null) engine = carBody.stockEngine;
-        if (turbo == null) turbo = carBody.stockTurbo;
-        if (transmission == null) transmission = carBody.stockTransmission;
-        if (suspension == null) suspension = carBody.stockSuspension;
-        if (tires == null) tires = carBody.stockTires;
-        if (brakes == null) brakes = carBody.stockBraks;
+        BuildCar();
+    }
+
+    public void RemovePartAndBuild(SlotTag tag)
+    {
+        if (removeActions.ContainsKey(tag))
+        {
+            removeActions[tag]();
+        }
 
         BuildCar();
     }

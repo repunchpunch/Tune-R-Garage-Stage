@@ -13,9 +13,6 @@ public class Item : ScriptableObject
     public int quality;
     protected float durabilityLeft = 100f;
 
-    // [Header("If the item can be equipped")]
-    // public GameObject equipmentPrefab;
-
     public float BreakEventEquation(float currentPower)
     {
         return 0.9f*(currentPower/maxPower)+0.1f + ((100f-durabilityLeft)/100f);

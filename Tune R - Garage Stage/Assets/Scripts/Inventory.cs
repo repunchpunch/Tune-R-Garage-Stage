@@ -53,38 +53,33 @@ public class Inventory : MonoBehaviour
     
     public void SetCarriedItem(InventoryItem item)
     {
-        if(carriedItem != null)
-        {
-            if(item.activeSlot.myTag != SlotTag.none && item.activeSlot.myTag != carriedItem.myItem.itemTag) return;
-            item.activeSlot.SetItem(carriedItem);
-        }
+        // if(carriedItem != null)
+        // {
+        //     if(item.activeSlot.myTag != SlotTag.none && item.activeSlot.myTag != carriedItem.myItem.itemTag) return;
+        //     if(item.activeSlot.myTag != SlotTag.none) CarBuilder.Instance.RemovePartAndBuild(item.activeSlot.myTag);
+        //     item.activeSlot.SetItem(carriedItem);
+        // }
+        // else if (item.activeSlot.myTag != SlotTag.none)
+        // {
+        //     CarBuilder.Instance.RemovePartAndBuild(item.activeSlot.myTag);
+        // }
 
+        // If there's a carried item and it's not compatible with the slot, return
+        if(              carriedItem != null 
+            && item.activeSlot.myTag != SlotTag.none
+            && item.activeSlot.myTag != carriedItem.myItem.itemTag) 
+            return;
+        
+        // If the slot is tagged, remove the current part from the CarBuilder
         if(item.activeSlot.myTag != SlotTag.none)
-        {
-            EquipEquipment(item.activeSlot.myTag, null);
-        }
+            CarBuilder.Instance.RemovePartAndBuild(item.activeSlot.myTag);
+
+        // If there's a carried item, place it in the slot
+        if(carriedItem != null)
+            item.activeSlot.SetItem(carriedItem);
 
         carriedItem = item;
         carriedItem.canvasGroup.blocksRaycasts = false;
         item.transform.SetParent(draggablesTransform);
-    }
-
-    public void EquipEquipment (SlotTag tag, InventoryItem item = null)
-    {
-        switch (tag)
-        {
-            case SlotTag.engine:
-                break;
-            case SlotTag.transmission:
-                break;
-            case SlotTag.turbo:
-                break;
-            case SlotTag.suspension:
-                break;
-            case SlotTag.tires:
-                break;
-            case SlotTag.brakes:
-                break;
-        }
     }
 }

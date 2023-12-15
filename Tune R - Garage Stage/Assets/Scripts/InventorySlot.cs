@@ -24,6 +24,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void SetItem(InventoryItem item)
     {
+        //Debug.Log(item.myItem.ToString());
         Inventory.carriedItem = null;
 
         item.activeSlot.myItem = null;
@@ -37,12 +38,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if(myTag != SlotTag.none)
         {
             OnItemAdded?.Invoke(item);
-            //Debug.Log("Signal");
         }
-
-        // if(myTag != SlotTag.none)
-        // {
-        //     Inventory.Singleton.EquipEquipment(myTag, myItem);
-        // }
     }
 }
