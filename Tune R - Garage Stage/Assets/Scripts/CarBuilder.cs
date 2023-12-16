@@ -7,7 +7,10 @@ using UnityEngine;
 
 public class CarBuilder : MonoBehaviour
 {
-    
+    public Bar PowerBar;
+    public Bar ChassisBar;
+    public Bar ReliabilityBar;
+
     private Dictionary<System.Type, System.Action<InventoryItem>> addActions;
     private Dictionary<SlotTag, System.Action> removeActions;
 
@@ -83,7 +86,7 @@ public class CarBuilder : MonoBehaviour
             addActions[itemType](item);
         }
 
-        BuildCar();
+        BuildCarAndUpdateBars();
     }
 
     public void RemovePartAndBuild(SlotTag tag)
@@ -93,7 +96,7 @@ public class CarBuilder : MonoBehaviour
             removeActions[tag]();
         }
 
-        BuildCar();
+        BuildCarAndUpdateBars();
     }
 
     private float CalculatePower()
@@ -116,6 +119,7 @@ public class CarBuilder : MonoBehaviour
     {
         float _p = CalculatePower();
         return
+                1 -
                 engine.BreakEventEquation(_p)
               * transmission.BreakEventEquation(_p)
               * turbo.BreakEventEquation(_p)
@@ -124,11 +128,20 @@ public class CarBuilder : MonoBehaviour
               * brakes.BreakEventEquation(_p);
     }
 
-    public Car BuildCar()
+    public Car BuildCarAndUpdateBars()
     {
         Car car = ScriptableObject.CreateInstance<Car>();
         if (!AreAllPartsPresent()) car.Initialize(0, 0, 0);
-        else car.Initialize(CalculatePower(), CalculateChassis(), CalculateReliability());
+        else 
+        {
+            float _power = CalculatePower();
+            double _chassis = CalculateChassis();
+            double _reliability = CalculateReliability();
+            car.Initialize(_power, _chassis, _reliability);
+            PowerBar.updateBar(_power);
+            ChassisBar.updateBar((float)_chassis);
+            ReliabilityBar.updateBar((float)_reliability);
+        }
         return car;
 
     }
