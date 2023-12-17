@@ -15,5 +15,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 46c6adfc5f858d6409df422ff65af967, type: 3}
   itemTag: 3
   maxPower: 505
-  quality: 1
+  quality: 2
   maxBoostInPercents: 20

@@ -32,6 +32,6 @@ public class CarBody : ScriptableObject
 
     public float getCurrentWeight()
     {
-        return weight-(upgradesCount* (weight/8f) );
+        return weight-(upgradesCount * (weight/8f) );
     }
 }

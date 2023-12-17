@@ -17,17 +17,17 @@ public class Inventory : MonoBehaviour
     [Header("Item List")]
     [SerializeField] Item[] items;
 
-    [Header("Debug")]
-    [SerializeField] Button giveItemBtn;
+    [SerializeField] Button raceBtn;
 
     void Awake()
     {
         Singleton = this;
-        giveItemBtn.onClick.AddListener(delegate { SpawnInventoryItem(); });
+        raceBtn.onClick.AddListener(delegate { SpawnItemForRace(); });
     }
     
-    public void SpawnInventoryItem(Item item = null)
+    public void SpawnItemForRace(Item item = null)
     {
+        if (!CarBuilder.Instance.AreAllPartsPresent()) return;
         Item _item = item;
         if(_item == null)
         {
@@ -44,6 +44,29 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void SpawnItemForWork()
+    {
+        List<Item> stockItems = new List<Item>();
+        foreach (Item i in items)
+        {
+            if (i.quality == 0)
+            {
+                stockItems.Add(i);
+            }
+        }
+        int random = Random.Range(0, stockItems.Count);
+        Item item = stockItems[random];
+
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if(inventorySlots[i].myItem == null)
+            {
+                Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(item, inventorySlots[i]);
+                break;
+            }
+        }
+    }
+
     void Update()
     {
         if (carriedItem == null) return;
@@ -53,17 +76,6 @@ public class Inventory : MonoBehaviour
     
     public void SetCarriedItem(InventoryItem item)
     {
-        // if(carriedItem != null)
-        // {
-        //     if(item.activeSlot.myTag != SlotTag.none && item.activeSlot.myTag != carriedItem.myItem.itemTag) return;
-        //     if(item.activeSlot.myTag != SlotTag.none) CarBuilder.Instance.RemovePartAndBuild(item.activeSlot.myTag);
-        //     item.activeSlot.SetItem(carriedItem);
-        // }
-        // else if (item.activeSlot.myTag != SlotTag.none)
-        // {
-        //     CarBuilder.Instance.RemovePartAndBuild(item.activeSlot.myTag);
-        // }
-
         // If there's a carried item and it's not compatible with the slot, return
         if(              carriedItem != null 
             && item.activeSlot.myTag != SlotTag.none

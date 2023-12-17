@@ -49,24 +49,24 @@ public class CarBuilder : MonoBehaviour
     private Brakes brakes;
     public CarBody carBody;
 
-    public CarBuilder ( 
-                        Engine engine,
-                        Turbo turbo,
-                        Transmission transmission,
-                        Suspension suspension,
-                        Tires tires,
-                        Brakes brakes,
-                        CarBody carBody
-                      )
-    {
-        this.engine = engine;
-        this.turbo = turbo;
-        this.transmission = transmission;
-        this.suspension = suspension;
-        this.tires = tires;
-        this.brakes = brakes;
-        this.carBody = carBody;
-    }
+    // public CarBuilder ( 
+    //                     Engine engine,
+    //                     Turbo turbo,
+    //                     Transmission transmission,
+    //                     Suspension suspension,
+    //                     Tires tires,
+    //                     Brakes brakes,
+    //                     CarBody carBody
+    //                   )
+    // {
+    //     this.engine = engine;
+    //     this.turbo = turbo;
+    //     this.transmission = transmission;
+    //     this.suspension = suspension;
+    //     this.tires = tires;
+    //     this.brakes = brakes;
+    //     this.carBody = carBody;
+    // }
 
     void OnEnable()
     {
@@ -130,23 +130,31 @@ public class CarBuilder : MonoBehaviour
 
     public Car BuildCarAndUpdateBars()
     {
+        float _power;
+        double _chassis;
+        double _reliability;
         Car car = ScriptableObject.CreateInstance<Car>();
-        if (!AreAllPartsPresent()) car.Initialize(0, 0, 0);
+        if (!AreAllPartsPresent())
+        {
+            _power = 0;
+            _chassis = 0;
+            _reliability = 0;
+        }
         else 
         {
-            float _power = CalculatePower();
-            double _chassis = CalculateChassis();
-            double _reliability = CalculateReliability();
-            car.Initialize(_power, _chassis, _reliability);
-            PowerBar.updateBar(_power);
-            ChassisBar.updateBar((float)_chassis);
-            ReliabilityBar.updateBar((float)_reliability);
+            _power = CalculatePower();
+            _chassis = CalculateChassis();
+            _reliability = CalculateReliability();
         }
+        car.Initialize(_power, _chassis, _reliability);
+        PowerBar.updateBar(_power);
+        ChassisBar.updateBar((float)_chassis);
+        ReliabilityBar.updateBar((float)_reliability);
         return car;
 
     }
 
-    private bool AreAllPartsPresent()
+    public bool AreAllPartsPresent()
     {
         List<Item> parts = new List<Item> { engine, turbo, transmission, suspension, tires, brakes };
 
