@@ -10,22 +10,35 @@ public class Inventory : MonoBehaviour
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
 
+    public delegate void RaceHandler();
+    public static event RaceHandler OnRace;
+
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] Transform draggablesTransform;
     [SerializeField] InventoryItem itemPrefab;
 
+    [Header("Stock Item List")]
+    [SerializeField] Item[] stockItems;
+
     [Header("Item List")]
     [SerializeField] Item[] items;
+
 
     [SerializeField] Button raceBtn;
 
     void Awake()
     {
         Singleton = this;
-        raceBtn.onClick.AddListener(delegate { SpawnItemForRace(); });
+        raceBtn.onClick.AddListener(delegate { Race(); });
     }
     
-    public void SpawnItemForRace(Item item = null)
+    private void Race()
+    {
+        SpawnItemForRace();
+        OnRace?.Invoke();
+    } 
+
+    private void SpawnItemForRace(Item item = null)
     {
         if (!CarBuilder.Instance.AreAllPartsPresent()) return;
         Item _item = item;
@@ -36,7 +49,7 @@ public class Inventory : MonoBehaviour
         }
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if(inventorySlots[i].myItem == null)
+            if(inventorySlots[i].myInventoryItem == null)
             {
                 Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(_item, inventorySlots[i]);
                 break;
@@ -46,20 +59,12 @@ public class Inventory : MonoBehaviour
 
     public void SpawnItemForWork()
     {
-        List<Item> stockItems = new List<Item>();
-        foreach (Item i in items)
-        {
-            if (i.quality == 0)
-            {
-                stockItems.Add(i);
-            }
-        }
-        int random = Random.Range(0, stockItems.Count);
+        int random = Random.Range(0, stockItems.Length);
         Item item = stockItems[random];
 
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if(inventorySlots[i].myItem == null)
+            if(inventorySlots[i].myInventoryItem == null)
             {
                 Instantiate(itemPrefab, inventorySlots[i].transform).Initialize(item, inventorySlots[i]);
                 break;

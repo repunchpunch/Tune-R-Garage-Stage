@@ -99,7 +99,7 @@ public class CarBuilder : MonoBehaviour
         BuildCarAndUpdateBars();
     }
 
-    private float CalculatePower()
+    public float CalculatePower()
     {
         return
                 engine.getCurrentEnginePower()

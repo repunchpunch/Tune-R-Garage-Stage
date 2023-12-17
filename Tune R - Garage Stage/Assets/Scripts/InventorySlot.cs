@@ -5,12 +5,22 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    public InventoryItem myItem {get; set;}
+    public InventoryItem myInventoryItem {get; set;}
 
     public SlotTag myTag;
 
     public delegate void ItemAddedDelegate(InventoryItem item);
     public static event ItemAddedDelegate OnItemAdded;
+
+    private void Start()
+    {
+        Inventory.OnRace += TakePartDamage;
+    }
+
+    private void OnDestroy()
+    {
+        Inventory.OnRace -= TakePartDamage;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -27,17 +37,27 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         //Debug.Log(item.myItem.ToString());
         Inventory.carriedItem = null;
 
-        item.activeSlot.myItem = null;
+        item.activeSlot.myInventoryItem = null;
 
-        myItem = item;
-        myItem.activeSlot = this;
-        myItem.transform.SetParent(transform);
-        myItem.transform.localPosition = Vector3.zero;
-        myItem.canvasGroup.blocksRaycasts = true;
+        myInventoryItem = item;
+        myInventoryItem.activeSlot = this;
+        myInventoryItem.transform.SetParent(transform);
+        myInventoryItem.transform.localPosition = Vector3.zero;
+        myInventoryItem.canvasGroup.blocksRaycasts = true;
 
         if(myTag != SlotTag.none)
         {
             OnItemAdded?.Invoke(item);
+        }
+    }
+
+    public void TakePartDamage()
+    {
+        if (myTag != SlotTag.none)
+        {
+            myInventoryItem.myItem.GetDamage(CarBuilder.Instance.CalculatePower());
+            myInventoryItem.bar.value = 1 - myInventoryItem.myItem.durabilityLeft/100f;
+            CarBuilder.Instance.BuildCarAndUpdateBars();
         }
     }
 }

@@ -15,6 +15,13 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
     public Item myItem {get; set;}
     public InventorySlot activeSlot {get; set;}
 
+    public Slider bar;
+
+    void Start()
+    {
+        bar = GetComponentInChildren<Slider>();
+    }
+
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -24,7 +31,7 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
     public void Initialize(Item item, InventorySlot parent)
     {
         activeSlot = parent;
-        activeSlot.myItem = this;
+        activeSlot.myInventoryItem = this;
         myItem = item;
         itemIcon.sprite = item.sprite;
     }

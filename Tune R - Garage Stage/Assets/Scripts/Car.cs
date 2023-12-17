@@ -20,5 +20,8 @@ public class Car : ScriptableObject
         this.reliability = reliability;
         Debug.Log(string.Format("Power:{0,10:F4}  Handling:{1,10:F4}  Reliability:{2,10:F4}",
                                 power, chassis, reliability));
+        
     }
+
+    
 }
