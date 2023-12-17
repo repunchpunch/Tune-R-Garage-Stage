@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public enum SlotTag {none, engine, transmission, turbo, suspension, tires, brakes}
 
+[Serializable]
 public class Item : ScriptableObject
 {
     public Sprite sprite;
@@ -12,11 +14,6 @@ public class Item : ScriptableObject
     public float maxPower;
     public int quality;
     public float durabilityLeft = 100f;
-
-    void Start()
-    {
-        durabilityLeft = 100f;
-    }
 
     public float BreakEventEquation(float currentPower)
     {
@@ -33,5 +30,5 @@ public class Item : ScriptableObject
     public void GetDamage(float currentPower)
     {
         durabilityLeft -= BreakEventEquation(currentPower)*10f;
-    } 
+    }
 }

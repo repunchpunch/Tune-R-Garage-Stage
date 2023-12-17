@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour
 
     private void SpawnItemForRace(Item item = null)
     {
-        if (!CarBuilder.Instance.AreAllPartsPresent()) return;
+        //if (!CarBuilder.Instance.AreAllPartsPresent()) return;
         Item _item = item;
         if(_item == null)
         {

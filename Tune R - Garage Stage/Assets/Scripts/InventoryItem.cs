@@ -32,7 +32,8 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
     {
         activeSlot = parent;
         activeSlot.myInventoryItem = this;
-        myItem = item;
+        //myItem = ScriptableObject.CreateInstance<Item>();
+        myItem = Instantiate(item);
         itemIcon.sprite = item.sprite;
     }
 

@@ -5385,6 +5385,13 @@ MonoBehaviour:
   - {fileID: 383978007}
   draggablesTransform: {fileID: 1706205325}
   itemPrefab: {fileID: 8000808018089486419, guid: 07299fb737612a840b8a97366f522ab1, type: 3}
+  stockItems:
+  - {fileID: 11400000, guid: 5e55cf16e02e9de4cb7bf1c32ee5fd24, type: 2}
+  - {fileID: 11400000, guid: fe9b724ce1288b64aa25e264f2e5fb93, type: 2}
+  - {fileID: 11400000, guid: a4662b67fcdb9f54384386a19ab6828b, type: 2}
+  - {fileID: 11400000, guid: 685e7adf7a11fdb4cbb46f1782c36d9a, type: 2}
+  - {fileID: 11400000, guid: 41131ef4b6bec1b4a9baa3a4dbe68d4b, type: 2}
+  - {fileID: 11400000, guid: 7c5401104d0decb45b5afbfef93de2de, type: 2}
   items:
   - {fileID: 11400000, guid: c6b3d9b483ad1b843a7430bb8782f080, type: 2}
   - {fileID: 11400000, guid: 6e765896e31eabe44bd1dc514ca1ef7a, type: 2}
@@ -5410,12 +5417,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5ec275df25860fb429e5c5310ff0f70f, type: 2}
   - {fileID: 11400000, guid: 2970ee3b8bfe84343aa9b44e67382e03, type: 2}
   - {fileID: 11400000, guid: 158dc585b6414af4fbd68b5fe7af50ee, type: 2}
-  - {fileID: 11400000, guid: 5e55cf16e02e9de4cb7bf1c32ee5fd24, type: 2}
-  - {fileID: 11400000, guid: fe9b724ce1288b64aa25e264f2e5fb93, type: 2}
-  - {fileID: 11400000, guid: a4662b67fcdb9f54384386a19ab6828b, type: 2}
-  - {fileID: 11400000, guid: 685e7adf7a11fdb4cbb46f1782c36d9a, type: 2}
-  - {fileID: 11400000, guid: 41131ef4b6bec1b4a9baa3a4dbe68d4b, type: 2}
-  - {fileID: 11400000, guid: 7c5401104d0decb45b5afbfef93de2de, type: 2}
   raceBtn: {fileID: 497544249}
 --- !u!114 &1617807330
 MonoBehaviour:

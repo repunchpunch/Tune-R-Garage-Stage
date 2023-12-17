@@ -9,6 +9,18 @@ public class Car : ScriptableObject
     private double chassis;
     private double reliability;
 
+    // void Start()
+    // {
+    //     car.Reset();
+    // }
+
+    // public void Reset()
+    // {
+    //     power = 0f;
+    //     chassis = 0.0;
+    //     reliability = 0.0;
+    // }
+
     public void Initialize ( 
                 float power,
                 double chassis,

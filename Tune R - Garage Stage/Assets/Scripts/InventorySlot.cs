@@ -53,7 +53,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void TakePartDamage()
     {
-        if (myTag != SlotTag.none)
+        if (myTag != SlotTag.none && myInventoryItem != null)
         {
             myInventoryItem.myItem.GetDamage(CarBuilder.Instance.CalculatePower());
             myInventoryItem.bar.value = 1 - myInventoryItem.myItem.durabilityLeft/100f;

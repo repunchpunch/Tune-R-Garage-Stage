@@ -83,6 +83,7 @@ public class CarBuilder : MonoBehaviour
         System.Type itemType = item.myItem.GetType();
         if (addActions.ContainsKey(itemType))
         {
+            Debug.Log("Added");
             addActions[itemType](item);
         }
 
