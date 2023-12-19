@@ -11,11 +11,9 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
 {
     Image itemIcon;
     public CanvasGroup canvasGroup {get; private set;}
-    public Durability durability { get; set;}
+    public Durability durability;
     public Item myItem {get; set;}
     public InventorySlot activeSlot {get; set;}
-
-    public Slider bar;
 
     void Awake()
     {

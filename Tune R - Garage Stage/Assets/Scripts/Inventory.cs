@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     public static InventoryItem carriedItem;
 
     public static event System.Action<float> OnRacing;
+    public static event System.Action OnRacingDamage;
 
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] Transform draggablesTransform;
@@ -36,6 +37,7 @@ public class Inventory : MonoBehaviour
     {
         SpawnItemForRace();
         OnRacing.Invoke(CarBuilder.Instance.CalculatePower());
+        OnRacingDamage.Invoke();
     } 
 
     private void SpawnItemForRace(Item item = null)

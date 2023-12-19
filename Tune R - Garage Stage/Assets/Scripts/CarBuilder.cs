@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -22,32 +23,40 @@ public class CarBuilder : MonoBehaviour
 
         addActions = new Dictionary<System.Type, System.Action<InventoryItem>>
         {
-            { typeof(Engine),       item => { engine       = (Engine)item.myItem;       } },
-            { typeof(Turbo),        item => { turbo        = (Turbo)item.myItem;        } },
-            { typeof(Transmission), item => { transmission = (Transmission)item.myItem; } },
-            { typeof(Suspension),   item => { suspension   = (Suspension)item.myItem;   } },
-            { typeof(Tires),        item => { tires        = (Tires)item.myItem;        } },
-            { typeof(Brakes),       item => { brakes       = (Brakes)item.myItem;       } }
+            { typeof(Engine),       item => { engineInventoryItem       = item; engine = item.myItem as Engine;             } },
+            { typeof(Turbo),        item => { turboInventoryItem        = item; turbo = item.myItem as Turbo;               } },
+            { typeof(Transmission), item => { transmissionInventoryItem = item; transmission = item.myItem as Transmission; } },
+            { typeof(Suspension),   item => { suspensionInventoryItem   = item; suspension = item.myItem as Suspension;     } },
+            { typeof(Tires),        item => { tiresInventoryItem        = item; tires = item.myItem as Tires;               } },
+            { typeof(Brakes),       item => { brakesInventoryItem       = item; brakes = item.myItem as Brakes;             } }
         };
 
         removeActions = new Dictionary<SlotTag, System.Action>
         {
-            { SlotTag.engine,       () => { engine       = null; } },
-            { SlotTag.turbo,        () => { turbo        = null; } },
-            { SlotTag.transmission, () => { transmission = null; } },
-            { SlotTag.suspension,   () => { suspension   = null; } },
-            { SlotTag.tires,        () => { tires        = null; } },
-            { SlotTag.brakes,       () => { brakes       = null; } }
+            { SlotTag.engine,       () => { engineInventoryItem       = null; engine = null;       } },
+            { SlotTag.turbo,        () => { turboInventoryItem        = null; turbo = null;        } },
+            { SlotTag.transmission, () => { transmissionInventoryItem = null; transmission = null; } },
+            { SlotTag.suspension,   () => { suspensionInventoryItem   = null; suspension = null;   } },
+            { SlotTag.tires,        () => { tiresInventoryItem        = null; tires = null;        } },
+            { SlotTag.brakes,       () => { brakesInventoryItem       = null; brakes = null;       } }
         };
     }
 
-    private Engine engine;
-    private Turbo turbo;
-    private Transmission transmission;
-    private Suspension suspension;
-    private Tires tires;
-    private Brakes brakes;
+    private InventoryItem engineInventoryItem;
+    private InventoryItem turboInventoryItem;
+    private InventoryItem transmissionInventoryItem;
+    private InventoryItem suspensionInventoryItem;
+    private InventoryItem tiresInventoryItem;
+    private InventoryItem brakesInventoryItem;
+
     public CarBody carBody;
+
+    Engine engine;
+    Turbo turbo;
+    Transmission transmission;
+    Suspension suspension;
+    Tires tires;
+    Brakes brakes;
 
     // public CarBuilder ( 
     //                     Engine engine,
@@ -71,11 +80,13 @@ public class CarBuilder : MonoBehaviour
     void OnEnable()
     {
         InventorySlot.OnItemAdded += AddPartAndBuild;
+        Inventory.OnRacingDamage += UpdateBars;
     }
 
     void OnDisable()
     {
         InventorySlot.OnItemAdded -= AddPartAndBuild;
+        Inventory.OnRacingDamage -= UpdateBars;
     }
 
     void AddPartAndBuild(InventoryItem item)
@@ -103,6 +114,7 @@ public class CarBuilder : MonoBehaviour
     public float CalculatePower()
     {
         return
+                //engine.getCurrentEnginePower()
                 engine.getCurrentEnginePower()
               * (1 + turbo.getCurrentBoostInPercents()/100f)
               * (transmission.efficiencyInPercents/100f);
@@ -119,14 +131,16 @@ public class CarBuilder : MonoBehaviour
     private double CalculateReliability()
     {
         float _p = CalculatePower();
-        return
-                1 -
-                engine.BreakEventEquation(_p)
-              * transmission.BreakEventEquation(_p)
-              * turbo.BreakEventEquation(_p)
-              * suspension.BreakEventEquation(_p)
-              * tires.BreakEventEquation(_p)
-              * brakes.BreakEventEquation(_p);
+        float _rel =
+            1 -
+                engineInventoryItem.durability.BreakEventEquation(_p)
+              * transmissionInventoryItem.durability.BreakEventEquation(_p)
+              * turboInventoryItem.durability.BreakEventEquation(_p)
+              * suspensionInventoryItem.durability.BreakEventEquation(_p)
+              * tiresInventoryItem.durability.BreakEventEquation(_p)
+              * brakesInventoryItem.durability.BreakEventEquation(_p);
+        Debug.Log(_rel);
+        return _rel;
     }
 
     public Car BuildCarAndUpdateBars()
@@ -153,6 +167,28 @@ public class CarBuilder : MonoBehaviour
         ReliabilityBar.updateBar((float)_reliability);
         return car;
 
+    }
+
+    public void UpdateBars()
+    {
+        float _power;
+        double _chassis;
+        double _reliability;
+        if (!AreAllPartsPresent())
+        {
+            _power = 0;
+            _chassis = 0;
+            _reliability = 0;
+        }
+        else
+        {
+            _power = CalculatePower();
+            _chassis = CalculateChassis();
+            _reliability = CalculateReliability();
+        }
+        PowerBar.updateBar(_power);
+        ChassisBar.updateBar((float)_chassis);
+        ReliabilityBar.updateBar((float)_reliability);
     }
 
     public bool AreAllPartsPresent()

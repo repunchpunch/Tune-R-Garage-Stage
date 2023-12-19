@@ -239,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f748e2adb70afab438f741e6e3acd73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  durability: {fileID: 8832318778251504886}
   bar: {fileID: 4814612698191033791}
 --- !u!222 &4897743156659695187
 CanvasRenderer:
@@ -302,6 +303,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2b718a12c815749b0517907bf973fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPower: 0
+  bar: {fileID: 4814612698191033791}
+  durabilityLeft: 100
 --- !u!1 &8520564409896907635
 GameObject:
   m_ObjectHideFlags: 0

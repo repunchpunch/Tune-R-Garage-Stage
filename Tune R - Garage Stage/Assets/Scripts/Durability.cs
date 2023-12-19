@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Durability : MonoBehaviour
 {
     public float maxPower;
+    
+    public Slider bar;
 
     public float durabilityLeft = 100f;
 
@@ -23,5 +26,6 @@ public class Durability : MonoBehaviour
     public void GetDamage(float currentPower)
     {
         durabilityLeft -= BreakEventEquation(currentPower) * 10f;
+        bar.value = 1 - durabilityLeft / 100f;
     }
 }
