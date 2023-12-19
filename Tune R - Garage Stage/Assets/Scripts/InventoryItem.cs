@@ -17,11 +17,6 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
 
     public Slider bar;
 
-    void Start()
-    {
-        bar = GetComponentInChildren<Slider>();
-    }
-
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
