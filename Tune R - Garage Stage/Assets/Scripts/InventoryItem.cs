@@ -11,7 +11,7 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
 {
     Image itemIcon;
     public CanvasGroup canvasGroup {get; private set;}
-
+    public Durability durability { get; set;}
     public Item myItem {get; set;}
     public InventorySlot activeSlot {get; set;}
 
@@ -30,6 +30,7 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
         //myItem = ScriptableObject.CreateInstance<Item>();
         myItem = Instantiate(item);
         itemIcon.sprite = item.sprite;
+        durability.maxPower = item.maxPower;
     }
 
     public void OnPointerClick(PointerEventData eventData)

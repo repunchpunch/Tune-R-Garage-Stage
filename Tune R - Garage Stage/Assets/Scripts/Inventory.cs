@@ -4,14 +4,14 @@ using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+//using System;
 
 public class Inventory : MonoBehaviour
 {
     public static Inventory Singleton;
     public static InventoryItem carriedItem;
 
-    public delegate void RaceHandler();
-    public static event RaceHandler OnRace;
+    public static event System.Action<float> OnRacing;
 
     [SerializeField] InventorySlot[] inventorySlots;
     [SerializeField] Transform draggablesTransform;
@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
     private void Race()
     {
         SpawnItemForRace();
-        OnRace?.Invoke();
+        OnRacing.Invoke(CarBuilder.Instance.CalculatePower());
     } 
 
     private void SpawnItemForRace(Item item = null)
@@ -98,5 +98,6 @@ public class Inventory : MonoBehaviour
         carriedItem = item;
         carriedItem.canvasGroup.blocksRaycasts = false;
         item.transform.SetParent(draggablesTransform);
+        Inventory.OnRacing -= carriedItem.durability.GetDamage;
     }
 }
