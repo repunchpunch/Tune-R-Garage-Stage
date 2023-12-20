@@ -80,13 +80,13 @@ public class CarBuilder : MonoBehaviour
     void OnEnable()
     {
         InventorySlot.OnItemAdded += AddPartAndBuild;
-        Inventory.OnRacingDamage += UpdateBars;
+        Inventory.OnRacingDamage += BuildCarAndUpdateBars;
     }
 
     void OnDisable()
     {
         InventorySlot.OnItemAdded -= AddPartAndBuild;
-        Inventory.OnRacingDamage -= UpdateBars;
+        Inventory.OnRacingDamage -= BuildCarAndUpdateBars;
     }
 
     void AddPartAndBuild(InventoryItem item)
@@ -114,7 +114,6 @@ public class CarBuilder : MonoBehaviour
     public float CalculatePower()
     {
         return
-                //engine.getCurrentEnginePower()
                 engine.getCurrentEnginePower()
               * (1 + turbo.getCurrentBoostInPercents()/100f)
               * (transmission.efficiencyInPercents/100f);
@@ -132,23 +131,24 @@ public class CarBuilder : MonoBehaviour
     {
         float _p = CalculatePower();
         float _rel =
+            Mathf.Pow( 
             1 -
                 engineInventoryItem.durability.BreakEventEquation(_p)
               * transmissionInventoryItem.durability.BreakEventEquation(_p)
               * turboInventoryItem.durability.BreakEventEquation(_p)
               * suspensionInventoryItem.durability.BreakEventEquation(_p)
               * tiresInventoryItem.durability.BreakEventEquation(_p)
-              * brakesInventoryItem.durability.BreakEventEquation(_p);
+              * brakesInventoryItem.durability.BreakEventEquation(_p),
+            8f);
         Debug.Log(_rel);
         return _rel;
     }
 
-    public Car BuildCarAndUpdateBars()
+    public void BuildCarAndUpdateBars()
     {
         float _power;
         double _chassis;
         double _reliability;
-        Car car = ScriptableObject.CreateInstance<Car>();
         if (!AreAllPartsPresent())
         {
             _power = 0;
@@ -161,34 +161,10 @@ public class CarBuilder : MonoBehaviour
             _chassis = CalculateChassis();
             _reliability = CalculateReliability();
         }
-        car.Initialize(_power, _chassis, _reliability);
         PowerBar.updateBar(_power);
         ChassisBar.updateBar((float)_chassis);
         ReliabilityBar.updateBar((float)_reliability);
-        return car;
 
-    }
-
-    public void UpdateBars()
-    {
-        float _power;
-        double _chassis;
-        double _reliability;
-        if (!AreAllPartsPresent())
-        {
-            _power = 0;
-            _chassis = 0;
-            _reliability = 0;
-        }
-        else
-        {
-            _power = CalculatePower();
-            _chassis = CalculateChassis();
-            _reliability = CalculateReliability();
-        }
-        PowerBar.updateBar(_power);
-        ChassisBar.updateBar((float)_chassis);
-        ReliabilityBar.updateBar((float)_reliability);
     }
 
     public bool AreAllPartsPresent()

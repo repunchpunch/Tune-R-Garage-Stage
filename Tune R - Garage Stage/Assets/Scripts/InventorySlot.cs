@@ -41,7 +41,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (myTag != SlotTag.none)
         {
             OnItemAdded?.Invoke(item);
-            Inventory.OnRacing += myInventoryItem.durability.GetDamage;
+            Inventory.OnRacing += myInventoryItem.GetDamage;
         }
     }
 

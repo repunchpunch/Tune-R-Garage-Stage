@@ -13,14 +13,16 @@ public class Durability : MonoBehaviour
 
     public float BreakEventEquation(float currentPower)
     {
-        return 0.9f * (currentPower / maxPower) + 0.1f + ((100f - durabilityLeft) / 100f);
+        return 0.5f*(currentPower / maxPower) + ((100f - durabilityLeft) / 100f);
     }
 
-    private bool WillBreak(float currentPower)
+    public bool WillBreak(float currentPower)
     {
         float chance = BreakEventEquation(currentPower);
         float randomValue = UnityEngine.Random.Range(0f, 1f);
-        return randomValue < chance;
+        float margin = 0.4f;
+        Debug.Log($"Random{randomValue} < Chance{Mathf.Pow(chance,16)}");
+        return randomValue < Mathf.Pow(chance, 16);
     }
 
     public void GetDamage(float currentPower)

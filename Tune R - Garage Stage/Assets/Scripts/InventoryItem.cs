@@ -38,4 +38,16 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler
             Inventory.Singleton.SetCarriedItem(this);
         }
     }
+
+    public void GetDamage(float currentPower)
+    {
+        durability.GetDamage(currentPower);
+        if (durability.WillBreak(currentPower))
+        {
+            Debug.Log("Remove");
+            CarBuilder.Instance.RemovePartAndBuild(myItem.itemTag);
+            Inventory.OnRacing -= GetDamage;
+            Destroy(gameObject);
+        }
+    }
 }

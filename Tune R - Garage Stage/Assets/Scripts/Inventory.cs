@@ -36,13 +36,14 @@ public class Inventory : MonoBehaviour
     private void Race()
     {
         SpawnItemForRace();
+        if (!CarBuilder.Instance.AreAllPartsPresent()) return;
         OnRacing.Invoke(CarBuilder.Instance.CalculatePower());
         OnRacingDamage.Invoke();
     } 
 
     private void SpawnItemForRace(Item item = null)
     {
-        //if (!CarBuilder.Instance.AreAllPartsPresent()) return;
+        if (!CarBuilder.Instance.AreAllPartsPresent()) return;
         Item _item = item;
         if(_item == null)
         {
@@ -100,6 +101,6 @@ public class Inventory : MonoBehaviour
         carriedItem = item;
         carriedItem.canvasGroup.blocksRaycasts = false;
         item.transform.SetParent(draggablesTransform);
-        Inventory.OnRacing -= carriedItem.durability.GetDamage;
+        Inventory.OnRacing -= carriedItem.GetDamage;
     }
 }
