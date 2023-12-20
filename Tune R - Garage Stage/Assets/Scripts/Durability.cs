@@ -20,7 +20,6 @@ public class Durability : MonoBehaviour
     {
         float chance = BreakEventEquation(currentPower);
         float randomValue = UnityEngine.Random.Range(0f, 1f);
-        float margin = 0.4f;
         Debug.Log($"Random{randomValue} < Chance{Mathf.Pow(chance,16)}");
         return randomValue < Mathf.Pow(chance, 16);
     }
